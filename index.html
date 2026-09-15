@@ -370,8 +370,8 @@
       <h1>Durchdachtes Zubehör für Auto, Camper und <em>alles dazwischen.</em></h1>
       <p>GEARLINE baut unkompliziertes Zubehör für Auto, Camper und Garage – von der Warntafel für die Italien-Reise bis zur Ölabsaugspritze für den nächsten Ölwechsel. Verkauft und versendet über Amazon.</p>
       <div class="hero-stats">
-        <div class="stat"><strong>4,4★</strong><span>Ø Bewertung</span></div>
-        <div class="stat"><strong>760+</strong><span>Kundenbewertungen</span></div>
+        <div class="stat"><strong id="hero-stat-rating">4,4★</strong><span>Ø Bewertung</span></div>
+        <div class="stat"><strong id="hero-stat-reviews">760+</strong><span>Kundenbewertungen</span></div>
       </div>
       <div class="hero-ctas">
         <a href="#produkte" class="btn btn-accent">Sortiment ansehen</a>
@@ -396,6 +396,7 @@
     <div class="section-head">
       <h2>Fünf Werkzeuge, die im Kofferraum bleiben.</h2>
       <p>Jedes Produkt wird direkt bei Amazon verkauft und versendet – inklusive Prime-Versand, Amazon-Käuferschutz und Rückgaberecht.</p>
+      <p class="mono" id="data-stand" style="color:var(--ink-soft); font-size:0.82rem; margin-top:10px;"></p>
     </div>
     <div class="grid">
 
@@ -460,6 +461,7 @@
         <div class="product-body">
           <div class="product-meta mono">
             <span class="price">14,95&nbsp;€</span>
+            <span class="price-old" style="display:none;"></span>
             <span class="rating"><span class="star">★</span> 5,0 · 4</span>
           </div>
           <h3>Ölabsaugspritze 500&nbsp;ml</h3>
@@ -578,6 +580,52 @@
       + '&body=' + encodeURIComponent(body);
     window.location.href = mailto;
   });
+</script>
+<script>
+  fetch('products.json').then(function(r){ return r.json(); }).then(function(data){
+    var totalReviews = 0, weightedRating = 0;
+    Object.keys(data.products).forEach(function(id){
+      var p = data.products[id];
+      var card = document.getElementById(id);
+      if (!card) return;
+      var priceEl = card.querySelector('.price');
+      var priceOldEl = card.querySelector('.price-old');
+      var ratingEl = card.querySelector('.rating');
+      if (priceEl) priceEl.textContent = p.price.toFixed(2).replace('.', ',') + ' €';
+      if (priceOldEl) {
+        if (p.priceOld) {
+          priceOldEl.textContent = p.priceOld.toFixed(2).replace('.', ',') + ' €';
+          priceOldEl.style.display = '';
+        } else {
+          priceOldEl.style.display = 'none';
+        }
+      }
+      if (ratingEl) {
+        var star = ratingEl.querySelector('.star') || (function(){
+          var s = document.createElement('span'); s.className = 'star'; s.textContent = '★';
+          return s;
+        })();
+        ratingEl.textContent = '';
+        ratingEl.appendChild(star);
+        ratingEl.appendChild(document.createTextNode(' ' + p.rating.toFixed(1).replace('.', ',') + ' · ' + p.reviews));
+      }
+      totalReviews += p.reviews;
+      weightedRating += p.rating * p.reviews;
+    });
+    if (totalReviews > 0) {
+      var avgRating = (weightedRating / totalReviews).toFixed(1).replace('.', ',');
+      var reviewsRounded = Math.floor(totalReviews / 10) * 10;
+      var statAvg = document.getElementById('hero-stat-rating');
+      var statCount = document.getElementById('hero-stat-reviews');
+      if (statAvg) statAvg.textContent = avgRating + '★';
+      if (statCount) statCount.textContent = reviewsRounded + '+';
+    }
+    var stamp = document.getElementById('data-stand');
+    if (stamp && data.lastChecked) {
+      var d = new Date(data.lastChecked + 'T00:00:00');
+      stamp.textContent = 'Preise & Bewertungen zuletzt geprüft am ' + d.toLocaleDateString('de-DE');
+    }
+  }).catch(function(){ /* bei Fehler bleiben die statischen Werte im HTML stehen */ });
 </script>
 </body>
 </html>

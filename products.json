@@ -1,0 +1,10 @@
+{
+  "lastChecked": "2026-09-15",
+  "products": {
+    "p-warntafel": { "asin": "B0FJMCDJ8D", "price": 29.95, "priceOld": 32.95, "rating": 4.5, "reviews": 141 },
+    "p-scheinwerfer": { "asin": "B0FJM1ZXZ2", "price": 16.95, "priceOld": 19.95, "rating": 4.5, "reviews": 353 },
+    "p-handpumpe": { "asin": "B0FJLZXSG4", "price": 18.66, "priceOld": 22.95, "rating": 4.3, "reviews": 160 },
+    "p-druckluft": { "asin": "B0FJM9S27M", "price": 27.95, "priceOld": 34.95, "rating": 4.3, "reviews": 104 },
+    "p-oelspritze": { "asin": "B0GXWYYB2L", "price": 14.95, "priceOld": null, "rating": 5.0, "reviews": 4 }
+  }
+}
