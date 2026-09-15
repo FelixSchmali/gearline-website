@@ -353,24 +353,29 @@
   .proof-note{ font-size:0.78rem; color: var(--ink-soft); margin: 14px 0 0; }
 
   .press-mention{
-    display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap;
+    display:flex; gap:22px; align-items:flex-start; flex-wrap:wrap;
     background: var(--surface); border:1px solid var(--line); border-radius:10px;
-    padding:20px 22px; margin: 28px 0;
+    padding:22px 24px; margin: 28px 0;
   }
-  .press-check{
-    flex-shrink:0; background:#E4002B; color:#fff;
-    font-family:'IBM Plex Sans'; font-weight:700; font-size:0.78rem;
-    padding:6px 11px; border-radius:4px; white-space:nowrap;
+  .press-logo{ width:112px; flex-shrink:0; border-radius:4px; display:block; }
+  .press-body{ flex:1; min-width:220px; }
+  .press-eyebrow{ font-size:0.72rem; color: var(--ink-soft); letter-spacing:0.05em; text-transform:uppercase; margin:0 0 8px; }
+  .press-title{ font-family:'Chakra Petch'; font-size:1.15rem; font-weight:700; margin:0; color: var(--ink); }
+  .press-subtitle{ font-size:0.85rem; color: var(--ink-soft); margin:2px 0 14px; }
+  .press-check-box{ border:1px solid var(--line); border-radius:8px; padding:14px 16px; background: var(--surface-2); }
+  .press-check-label{
+    display:inline-block; background:#D51224; color:#fff;
+    font-family:'IBM Plex Sans'; font-weight:700; font-size:0.72rem;
+    padding:4px 9px; border-radius:3px; margin-bottom:10px;
   }
-  .press-body{ flex:1; min-width:200px; }
-  .press-eyebrow{ font-size:0.72rem; color: var(--accent-strong); letter-spacing:0.06em; text-transform:uppercase; margin:0 0 6px; }
-  .press-stars{ color: var(--accent-strong); font-size:0.95rem; margin-bottom:6px; }
-  .press-stars span{
-    font-family:'IBM Plex Mono'; font-size:0.75rem; color: var(--ink-soft);
-    margin-left:8px; text-transform:uppercase; letter-spacing:0.03em;
-  }
-  .press-body p{ margin:0 0 8px; font-size:0.95rem; color: var(--ink); }
-  .press-source{ font-family:'IBM Plex Mono'; font-size:0.78rem; color: var(--ink-soft); }
+  .press-check-list{ list-style:none; margin:0 0 12px; padding:0; display:flex; flex-direction:column; gap:6px; }
+  .press-check-list li{ font-size:0.88rem; color: var(--ink); padding-left:20px; position:relative; line-height:1.4; }
+  .press-check-list li.pro::before{ content:"+"; position:absolute; left:0; top:0; color:#1a7a3c; font-weight:700; }
+  .press-check-list li.con::before{ content:"–"; position:absolute; left:0; top:0; color:#a3312c; font-weight:700; }
+  .press-check-footer{ display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--line); padding-top:10px; flex-wrap:wrap; gap:8px; }
+  .press-price{ font-family:'IBM Plex Mono'; font-weight:600; color: var(--ink); font-size:0.9rem; }
+  .press-stars{ color: var(--accent-strong); font-size:0.9rem; }
+  .press-stars em{ font-style:normal; font-family:'IBM Plex Mono'; font-size:0.72rem; color: var(--ink-soft); margin-left:6px; text-transform:uppercase; letter-spacing:0.02em; }
 
   /* ---------- contact ---------- */
   .contact{ background: var(--bg); }
@@ -601,12 +606,22 @@
     </div>
 
     <div class="press-mention">
-      <span class="press-check">MOTORRAD-Check</span>
+      <img class="press-logo" src="img/motorrad-logo.svg" alt="MOTORRAD Logo">
       <div class="press-body">
-        <p class="press-eyebrow mono">Bekannt aus MOTORRAD</p>
-        <div class="press-stars">★★★★★<span>Sehr gut</span></div>
-        <p>„Top-Verarbeitung, einfache Erstmontage und Bedienung.“</p>
-        <div class="press-source">MOTORRAD, Ausgabe 15/2026 · GEARLINE Handpumpe</div>
+        <p class="press-eyebrow mono">Bekannt aus MOTORRAD · Testbericht, Ausgabe 15/2026</p>
+        <h4 class="press-title">GEARLINE Handpumpe</h4>
+        <p class="press-subtitle">XL-Umfüllpumpe mit Handbetrieb</p>
+        <div class="press-check-box">
+          <span class="press-check-label">MOTORRAD-Check</span>
+          <ul class="press-check-list">
+            <li class="pro">„Top-Verarbeitung, einfache Erstmontage und Bedienung.“</li>
+            <li class="con">Laut Test nicht für Trinkwasser oder Speiseöl zugelassen</li>
+          </ul>
+          <div class="press-check-footer">
+            <span class="press-price">21,95&nbsp;€</span>
+            <span class="press-stars">★★★★★<em>Sehr gut</em></span>
+          </div>
+        </div>
       </div>
     </div>
 
