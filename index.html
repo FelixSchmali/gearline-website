@@ -352,6 +352,25 @@
   }
   .proof-note{ font-size:0.78rem; color: var(--ink-soft); margin: 14px 0 0; }
 
+  .press-mention{
+    display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap;
+    background: var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:20px 22px; margin: 28px 0;
+  }
+  .press-check{
+    flex-shrink:0; background:#E4002B; color:#fff;
+    font-family:'IBM Plex Sans'; font-weight:700; font-size:0.78rem;
+    padding:6px 11px; border-radius:4px; white-space:nowrap;
+  }
+  .press-body{ flex:1; min-width:200px; }
+  .press-stars{ color: var(--accent-strong); font-size:0.95rem; margin-bottom:6px; }
+  .press-stars span{
+    font-family:'IBM Plex Mono'; font-size:0.75rem; color: var(--ink-soft);
+    margin-left:8px; text-transform:uppercase; letter-spacing:0.03em;
+  }
+  .press-body p{ margin:0 0 8px; font-size:0.95rem; color: var(--ink); }
+  .press-source{ font-family:'IBM Plex Mono'; font-size:0.78rem; color: var(--ink-soft); }
+
   /* ---------- contact ---------- */
   .contact{ background: var(--bg); }
   .contact-grid{ display:grid; grid-template-columns: 1fr 1.15fr; gap: 56px; }
@@ -579,6 +598,16 @@
       <strong>1.200+</strong>
       <span>Über 1.200 Kundinnen und Kunden entscheiden sich jeden Monat für GEARLINE-Produkte.*</span>
     </div>
+
+    <div class="press-mention">
+      <span class="press-check">MOTORRAD-Check</span>
+      <div class="press-body">
+        <div class="press-stars">★★★★★<span>Sehr gut</span></div>
+        <p>„Top-Verarbeitung, einfache Erstmontage und Bedienung.“</p>
+        <div class="press-source">MOTORRAD, Ausgabe 15/2026 · GEARLINE Handpumpe</div>
+      </div>
+    </div>
+
     <p class="proof-note" style="margin-top:0;">Das sagen unsere Kundinnen und Kunden – Ø 4,5★ bei über 770 Bewertungen:</p>
     <div class="review-grid">
       <div class="review-card">
