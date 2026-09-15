@@ -1,0 +1,574 @@
+<title>GEARLINE</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+  :root{
+    --bg: #F5F1E7;
+    --surface: #FFFFFF;
+    --surface-2: #F8F3E7;
+    --ink: #2A241D;
+    --ink-soft: #6E6455;
+    --line: #E7DCC4;
+    --accent: #E3A81C;
+    --accent-strong: #966E0B;
+    --accent-ink: #2A210A;
+    --band-bg: #372B1B;
+    --band-ink: #F8F1E1;
+    --band-ink-soft: #CBB999;
+    --band-line: #4D3D26;
+    --shadow: rgba(42,36,29,0.12);
+    --plate: #F3EAD4;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #1C1712;
+      --surface: #262019;
+      --surface-2: #2B241B;
+      --ink: #F2E9D8;
+      --ink-soft: #B7A88E;
+      --line: #3C3222;
+      --accent: #F0BB3D;
+      --accent-strong: #F0BB3D;
+      --accent-ink: #241C0C;
+      --band-bg: #241C12;
+      --band-ink: #F8F1E1;
+      --band-ink-soft: #B7A483;
+      --band-line: #3A2C1C;
+      --shadow: rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #1C1712;
+    --surface: #262019;
+    --surface-2: #2B241B;
+    --ink: #F2E9D8;
+    --ink-soft: #B7A88E;
+    --line: #3C3222;
+    --accent: #F0BB3D;
+    --accent-strong: #F0BB3D;
+    --accent-ink: #241C0C;
+    --band-bg: #241C12;
+    --band-ink: #F8F1E1;
+    --band-ink-soft: #B7A483;
+    --band-line: #3A2C1C;
+    --shadow: rgba(0,0,0,0.4);
+  }
+
+  *{ box-sizing: border-box; }
+  @media (prefers-reduced-motion: no-preference){
+    html{ scroll-behavior: smooth; }
+  }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  h1,h2,h3{
+    font-family: 'Chakra Petch', ui-sans-serif, system-ui, sans-serif;
+    text-wrap: balance;
+    margin: 0;
+  }
+  .mono{ font-family: 'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  a{ color: inherit; }
+  img{ display:block; max-width:100%; }
+  .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position: sticky; top:0; z-index: 40;
+    background: var(--band-bg);
+    color: var(--band-ink);
+    border-bottom: 1px solid var(--band-line);
+  }
+  .nav .wrap{ display:flex; align-items:center; justify-content:space-between; height: 72px; }
+  .wordmark{
+    display:inline-flex; align-items:center; text-decoration:none;
+    font-family:'Chakra Petch'; font-weight:700; font-size:1.28rem; letter-spacing:0.05em;
+    color: var(--band-ink);
+  }
+  .wordmark em{ font-style:normal; color: var(--accent); }
+  .nav-links{ display:flex; align-items:center; gap: 30px; list-style:none; margin:0; padding:0; }
+  .nav-links a{
+    text-decoration:none; color: var(--band-ink-soft);
+    font-size: 0.92rem; font-weight: 500; letter-spacing:0.02em;
+    transition: color .15s ease;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{ color: var(--band-ink); }
+  .nav-links .btn{ color: var(--accent-ink); }
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding: 12px 22px; border-radius: 3px;
+    font-family:'IBM Plex Sans'; font-weight:600; font-size:0.95rem;
+    text-decoration:none; border:1px solid transparent; cursor:pointer;
+    transition: transform .12s ease, background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .btn:active{ transform: translateY(1px); }
+  .btn-accent{ background: var(--accent); color: var(--accent-ink); }
+  .btn-accent:hover{ background: color-mix(in srgb, var(--accent) 88%, black 0%); filter:brightness(1.06); }
+  .btn-ghost-dark{ border-color: var(--band-line); color: var(--band-ink); background:transparent; }
+  .btn-ghost-dark:hover{ border-color: var(--band-ink-soft); }
+  .btn-ghost{ border-color: var(--line); color: var(--ink); background:transparent; }
+  .btn-ghost:hover{ border-color: var(--ink-soft); }
+  .btn:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:
+      radial-gradient(ellipse 900px 500px at 78% 8%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 60%),
+      var(--band-bg);
+    color: var(--band-ink);
+    padding: 92px 0 88px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .wrap{ position:relative; z-index:1; }
+  .hero-grid{ display:grid; grid-template-columns: 0.82fr 1.18fr; gap: 32px; align-items:center; }
+  .eyebrow{
+    font-family:'IBM Plex Mono'; font-size:0.8rem; letter-spacing:0.16em;
+    text-transform:uppercase; color: var(--accent); margin: 0 0 20px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:""; width: 22px; height: 1px; background: var(--accent);
+  }
+  .hero h1{
+    font-size: clamp(2.4rem, 4.6vw, 3.6rem);
+    font-weight: 700; letter-spacing: 0.005em;
+    max-width: 13ch;
+    color: var(--band-ink);
+  }
+  .hero h1 em{ font-style:normal; color: var(--accent); }
+  .hero p{
+    max-width: 46ch; margin: 24px 0 32px;
+    color: var(--band-ink-soft); font-size: 1.08rem;
+  }
+  .hero-stats{ display:flex; gap: 30px; margin-bottom: 36px; flex-wrap:wrap; }
+  .hero-stats .stat{ display:flex; flex-direction:column; }
+  .hero-stats strong{
+    font-family:'Chakra Petch'; font-size:1.5rem; font-weight:700; color: var(--band-ink);
+    line-height:1.1;
+  }
+  .hero-stats span{
+    font-family:'IBM Plex Mono'; font-size:0.72rem; color: var(--band-ink-soft);
+    letter-spacing:0.02em; margin-top:4px;
+  }
+  .hero-ctas{ display:flex; gap:16px; flex-wrap:wrap; }
+
+  /* ---------- hero product gallery (3D fan) ---------- */
+  .hero-stage{
+    position:relative; width:100%; height: 480px; max-width: 700px;
+    margin: 0 auto; perspective: 1300px;
+  }
+  .stage-photo{
+    position:absolute; top:50%; left:50%; width: 270px; aspect-ratio:1/1;
+    padding: 16px; border-radius: 18px; overflow:hidden;
+    background: color-mix(in srgb, var(--band-bg) 82%, var(--plate) 18%);
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    box-shadow: 0 30px 46px -20px rgba(0,0,0,0.55), 0 0 0 6px color-mix(in srgb, var(--band-bg) 55%, transparent);
+    transition: transform .25s ease, filter .25s ease, box-shadow .25s ease;
+    cursor: pointer;
+  }
+  .stage-photo:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
+  .stage-photo img{
+    width:100%; height:100%; object-fit:contain; display:block;
+    animation: stage-float 4.5s ease-in-out infinite;
+  }
+  @keyframes stage-float{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(-8px); }
+  }
+  .pos-1{ transform: translate(-50%,-50%) translate(-248px,-18px) rotateY(30deg) rotateZ(-16deg) scale(0.66); z-index:1; filter:brightness(0.74); }
+  .pos-2{ transform: translate(-50%,-50%) translate(-128px,18px) rotateY(16deg) rotateZ(-8deg) scale(0.83); z-index:2; filter:brightness(0.86); }
+  .pos-3{ transform: translate(-50%,-50%) translate(0,-12px) rotateZ(0deg) scale(1.15); z-index:5; }
+  .pos-4{ transform: translate(-50%,-50%) translate(128px,18px) rotateY(-16deg) rotateZ(8deg) scale(0.83); z-index:3; filter:brightness(0.86); }
+  .pos-5{ transform: translate(-50%,-50%) translate(248px,-18px) rotateY(-30deg) rotateZ(16deg) scale(0.66); z-index:2; filter:brightness(0.74); }
+  .stage-photo:nth-child(2) img{ animation-delay: 0s; }
+  .stage-photo:nth-child(3) img{ animation-delay: .6s; }
+  .stage-photo:nth-child(4) img{ animation-delay: 1.2s; }
+  .stage-photo:nth-child(5) img{ animation-delay: 1.8s; }
+  .stage-photo:nth-child(6) img{ animation-delay: 2.4s; }
+  .stage-photo:hover{
+    z-index:6; filter:brightness(1);
+    box-shadow: 0 34px 54px -18px rgba(0,0,0,0.65), 0 0 0 6px color-mix(in srgb, var(--band-bg) 55%, transparent);
+  }
+  .pos-1:hover{ transform: translate(-50%,-50%) translate(-248px,-26px) rotateY(30deg) rotateZ(-16deg) scale(0.72); }
+  .pos-2:hover{ transform: translate(-50%,-50%) translate(-128px,6px) rotateY(16deg) rotateZ(-8deg) scale(0.9); }
+  .pos-3:hover{ transform: translate(-50%,-50%) translate(0,-22px) rotateZ(0deg) scale(1.21); }
+  .pos-4:hover{ transform: translate(-50%,-50%) translate(128px,6px) rotateY(-16deg) rotateZ(8deg) scale(0.9); }
+  .pos-5:hover{ transform: translate(-50%,-50%) translate(248px,-26px) rotateY(-30deg) rotateZ(16deg) scale(0.72); }
+  @media (prefers-reduced-motion: reduce){
+    .stage-photo{ transition:none; }
+    .stage-photo img{ animation:none; }
+  }
+  .brand-tag{
+    position:absolute; top:-18px; left:50%; z-index:6;
+    background: var(--plate); border-radius:14px;
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    padding:14px 28px; transform: translateX(-50%) rotate(-3deg);
+    box-shadow: 0 16px 28px -10px rgba(0,0,0,0.5);
+  }
+  .brand-tag img{ height:24px; display:block; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.35)); }
+
+  .hazard{
+    height: 10px;
+    background: repeating-linear-gradient(135deg, var(--accent) 0 18px, var(--band-bg) 18px 36px);
+  }
+
+  /* ---------- section shell ---------- */
+  section{ padding: 84px 0; }
+  .section-head{ max-width: 62ch; margin-bottom: 48px; }
+  .section-head h2{ font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight:700; }
+  .section-head p{ color: var(--ink-soft); margin: 14px 0 0; font-size: 1.03rem; }
+
+  /* ---------- products ---------- */
+  .products{ background: var(--bg); }
+  .grid{
+    display:grid; gap: 26px;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  }
+  .product-card{
+    scroll-margin-top: 96px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    display:flex; flex-direction:column;
+    transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  }
+  .product-card:hover{
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+    box-shadow: 0 14px 30px -18px var(--shadow);
+    transform: translateY(-2px);
+  }
+  .product-media{
+    aspect-ratio: 1 / 1;
+    background: var(--surface-2);
+    display:flex; align-items:center; justify-content:center;
+    padding: 22px; overflow:hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .product-media img{ width:100%; height:100%; object-fit:contain; }
+  .product-media img.fill-tall{ transform: scale(1.08); }
+  .product-body{ padding: 20px 22px 24px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .product-meta{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; font-size:0.92rem; }
+  .price{ font-weight:600; color: var(--ink); }
+  .price-old{ color: var(--ink-soft); text-decoration: line-through; }
+  .rating{ color: var(--ink-soft); margin-left:auto; }
+  .rating .star{ color: var(--accent-strong); }
+  .product-body h3{ font-size: 1.08rem; font-weight:600; font-family:'IBM Plex Sans'; line-height:1.35; }
+  .product-body p{ color: var(--ink-soft); font-size: 0.93rem; margin:0; flex:1; }
+  .product-body .btn{ margin-top: 6px; align-self:flex-start; }
+
+  /* ---------- pillars ---------- */
+  .pillars{ background: var(--surface-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .pillar-grid{ display:grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); }
+  .pillar .num{ font-family:'IBM Plex Mono'; color: var(--accent-strong); font-size:0.85rem; letter-spacing:0.1em; }
+  .pillar h3{ font-size:1.15rem; font-weight:600; font-family:'IBM Plex Sans'; margin: 10px 0 8px; }
+  .pillar p{ color: var(--ink-soft); font-size:0.95rem; margin:0; }
+
+  /* ---------- contact ---------- */
+  .contact{ background: var(--bg); }
+  .contact-grid{ display:grid; grid-template-columns: 1fr 1.15fr; gap: 56px; }
+  .contact-info h2{ font-size: clamp(1.5rem,2.6vw,1.9rem); }
+  .contact-info p{ color: var(--ink-soft); margin: 16px 0 26px; max-width:40ch; }
+  .contact-direct{ font-family:'IBM Plex Mono'; font-size:0.95rem; border-top:1px solid var(--line); padding-top:18px; }
+  .contact-direct a{ color: var(--accent-strong); text-decoration:none; }
+  .contact-direct a:hover{ text-decoration:underline; }
+  form{ display:flex; flex-direction:column; gap:16px; }
+  .field{ display:flex; flex-direction:column; gap:7px; }
+  .field label{ font-size:0.85rem; font-weight:600; color: var(--ink-soft); }
+  .field input, .field textarea{
+    font-family:'IBM Plex Sans'; font-size:0.98rem;
+    background: var(--surface); color: var(--ink);
+    border:1px solid var(--line); border-radius:4px; padding:12px 14px;
+  }
+  .field textarea{ resize:vertical; min-height:120px; }
+  .field input:focus-visible, .field textarea:focus-visible{ outline: 2px solid var(--accent); outline-offset:1px; }
+  .form-note{ font-size:0.83rem; color: var(--ink-soft); }
+
+  /* ---------- legal band ---------- */
+  .legal{ background: var(--band-bg); color: var(--band-ink); }
+  .legal-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .legal h2{ font-size:1.3rem; color: var(--band-ink); margin-bottom:16px; }
+  .legal p{ color: var(--band-ink-soft); margin:0 0 10px; font-size:0.95rem; }
+  .legal .mono-block{ font-family:'IBM Plex Mono'; font-size:0.92rem; color: var(--band-ink); line-height:1.9; }
+  .legal .mono-block .muted{ color: var(--band-ink-soft); }
+
+  /* ---------- footer ---------- */
+  .footer{ background: var(--band-bg); border-top:1px solid var(--band-line); }
+  .footer .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 26px 0; flex-wrap:wrap; gap:14px;
+  }
+  .footer .wordmark{ font-size:1.05rem; }
+  .footer small{ color: var(--band-ink-soft); font-size:0.85rem; }
+
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .hero-stats{ gap:24px; }
+  }
+  @media (max-width: 780px){
+    .contact-grid, .legal-grid{ grid-template-columns: 1fr; }
+    .nav-links{ gap:18px; }
+    .nav-links .link-label{ display:none; }
+  }
+  @media (max-width: 560px){
+    .nav-links a:not(.btn){ display:none; }
+  }
+
+  /* ---------- hero gallery: swipeable strip on phones/small tablets ---------- */
+  @media (max-width: 680px){
+    .hero-stage{
+      display:flex; align-items:flex-start; gap:14px;
+      width:auto; max-width:none; height:auto;
+      margin: 0 -28px; padding: 10px 28px 20px;
+      overflow-x:auto; overflow-y:visible;
+      scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+      perspective:none;
+    }
+    .hero-stage::-webkit-scrollbar{ display:none; }
+    .brand-tag{ display:none; }
+    .hero-stage .stage-photo{
+      position:static; flex:0 0 auto; width:170px; height:170px;
+      transform:none; filter:none; scroll-snap-align:center;
+      padding:0; border:none; box-shadow:none; overflow:visible; background:none;
+    }
+    .hero-stage .stage-photo:hover, .hero-stage .stage-photo:active{
+      transform:none; filter:none; box-shadow:none;
+    }
+    .hero-stage .stage-photo img{ animation:none; }
+  }
+</style>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="wordmark" href="#top">GEAR<em>LINE</em></a>
+    <ul class="nav-links">
+      <li><a href="#produkte" class="link-label">Produkte</a></li>
+      <li><a href="#warum" class="link-label">Warum GEARLINE</a></li>
+      <li><a href="#impressum" class="link-label">Impressum</a></li>
+      <li><a href="#kontakt" class="btn btn-accent">Kontakt</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header id="top" class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>Durchdachtes Zubehör für Auto, Camper und <em>alles dazwischen.</em></h1>
+      <p>GEARLINE baut unkompliziertes Zubehör für Auto, Camper und Garage – von der Warntafel für die Italien-Reise bis zur Ölabsaugspritze für den nächsten Ölwechsel. Verkauft und versendet über Amazon.</p>
+      <div class="hero-stats">
+        <div class="stat"><strong>4,4★</strong><span>Ø Bewertung</span></div>
+        <div class="stat"><strong>760+</strong><span>Kundenbewertungen</span></div>
+      </div>
+      <div class="hero-ctas">
+        <a href="#produkte" class="btn btn-accent">Sortiment ansehen</a>
+        <a href="#kontakt" class="btn btn-ghost-dark">Frage stellen</a>
+      </div>
+    </div>
+
+    <div class="hero-stage">
+      <span class="brand-tag"><img src="img/gearline-logo-cutout.png" alt="GEARLINE"></span>
+      <a class="stage-photo pos-1" href="#p-scheinwerfer" aria-label="Zum Scheinwerfer Aufbereitung Set"><img src="img/scheinwerfer-cutout.png" alt="Scheinwerfer Aufbereitung Set"></a>
+      <a class="stage-photo pos-2" href="#p-handpumpe" aria-label="Zur Handpumpe"><img src="img/handpumpe-cutout.png" alt="Handpumpe XL Umfüllpumpe"></a>
+      <a class="stage-photo pos-3" href="#p-warntafel" aria-label="Zur 3-in-1 Warntafel"><img src="img/warntafel-cutout.png" alt="3-in-1 Warntafel"></a>
+      <a class="stage-photo pos-4" href="#p-druckluft" aria-label="Zur Druckluft Reinigungspistole"><img src="img/druckluftpistole-cutout.png" alt="Druckluft Reinigungspistole"></a>
+      <a class="stage-photo pos-5" href="#p-oelspritze" aria-label="Zur Ölabsaugspritze"><img src="img/oelspritze-cutout.png" alt="Ölabsaugspritze 500 ml"></a>
+    </div>
+  </div>
+</header>
+<div class="hazard" aria-hidden="true"></div>
+
+<section id="produkte" class="products">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Fünf Werkzeuge, die im Kofferraum bleiben.</h2>
+      <p>Jedes Produkt wird direkt bei Amazon verkauft und versendet – inklusive Prime-Versand, Amazon-Käuferschutz und Rückgaberecht.</p>
+    </div>
+    <div class="grid">
+
+      <article class="product-card" id="p-warntafel">
+        <div class="product-media"><img class="fill-tall" src="img/warntafel-cutout.png" alt="GEARLINE 3-in-1 Warntafel für Italien, Spanien und Portugal"></div>
+        <div class="product-body">
+          <div class="product-meta mono">
+            <span class="price">29,95&nbsp;€</span>
+            <span class="price-old">32,95&nbsp;€</span>
+            <span class="rating"><span class="star">★</span> 4,5 · 141</span>
+          </div>
+          <h3>3-in-1 Warntafel für Italien, Spanien &amp; Portugal</h3>
+          <p>Beidseitige, reflektierende Warntafel aus wetterfestem Aluminium – inkl. 4 Spanngummis und Schutzhülle für Heckträger und Fahrradanhänger.</p>
+          <a class="btn btn-accent" href="https://www.amazon.de/dp/B0FJMCDJ8D" target="_blank" rel="noopener noreferrer">Bei Amazon ansehen <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
+
+      <article class="product-card" id="p-scheinwerfer">
+        <div class="product-media"><img src="img/scheinwerfer-cutout.png" alt="GEARLINE Scheinwerfer Aufbereitung Set mit 24 Teilen"></div>
+        <div class="product-body">
+          <div class="product-meta mono">
+            <span class="price">16,95&nbsp;€</span>
+            <span class="price-old">19,95&nbsp;€</span>
+            <span class="rating"><span class="star">★</span> 4,5 · 353</span>
+          </div>
+          <h3>Scheinwerfer Aufbereitung Set [24 Teile]</h3>
+          <p>14 Schleifscheiben in 7 Körnungen, Polierpaste und UV-Schutz gegen matte, blinde Scheinwerfer – per M14-Adapter kompatibel mit jedem Akkuschrauber.</p>
+          <a class="btn btn-accent" href="https://www.amazon.de/dp/B0FJM1ZXZ2" target="_blank" rel="noopener noreferrer">Bei Amazon ansehen <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
+
+      <article class="product-card" id="p-handpumpe">
+        <div class="product-media"><img src="img/handpumpe-cutout.png" alt="GEARLINE Handpumpe mit 2 Meter Schlauch"></div>
+        <div class="product-body">
+          <div class="product-meta mono">
+            <span class="price">18,66&nbsp;€</span>
+            <span class="price-old">22,95&nbsp;€</span>
+            <span class="rating"><span class="star">★</span> 4,3 · 160</span>
+          </div>
+          <h3>Handpumpe [2&nbsp;Meter] XL Umfüllpumpe</h3>
+          <p>2 m langer, teilbarer Schlauch mit Filtersieb zum Umfüllen und Abpumpen von Wasser, Benzin, Diesel und Öl – startet per Handdruck, ganz ohne Ansaugen.</p>
+          <a class="btn btn-accent" href="https://www.amazon.de/dp/B0FJLZXSG4" target="_blank" rel="noopener noreferrer">Bei Amazon ansehen <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
+
+      <article class="product-card" id="p-druckluft">
+        <div class="product-media"><img src="img/druckluftpistole-cutout.png" alt="GEARLINE Druckluft Reinigungspistole mit Wirbelstrahl-Technik"></div>
+        <div class="product-body">
+          <div class="product-meta mono">
+            <span class="price">27,95&nbsp;€</span>
+            <span class="price-old">34,95&nbsp;€</span>
+            <span class="rating"><span class="star">★</span> 4,3 · 104</span>
+          </div>
+          <h3>Druckluft Reinigungspistole</h3>
+          <p>All-in-One-Set mit 1-Liter-Wassertank und 2 Düsenaufsätzen – löst per Wirbelstrahl-Technik Schmutz aus Polster, Lack, Teppich und Lüftung.</p>
+          <a class="btn btn-accent" href="https://www.amazon.de/dp/B0FJM9S27M" target="_blank" rel="noopener noreferrer">Bei Amazon ansehen <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
+
+      <article class="product-card" id="p-oelspritze">
+        <div class="product-media"><img class="fill-tall" src="img/oelspritze-cutout.png" alt="GEARLINE Ölabsaugspritze 500 Milliliter"></div>
+        <div class="product-body">
+          <div class="product-meta mono">
+            <span class="price">14,95&nbsp;€</span>
+            <span class="rating"><span class="star">★</span> 5,0 · 4</span>
+          </div>
+          <h3>Ölabsaugspritze 500&nbsp;ml</h3>
+          <p>Inkl. Verlängerungsschlauch und Dichtungsring – auslaufsicher für Motoröl, Getriebeöl, Kühl- und Bremsflüssigkeit.</p>
+          <a class="btn btn-accent" href="https://www.amazon.de/dp/B0GXWYYB2L" target="_blank" rel="noopener noreferrer">Bei Amazon ansehen <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="warum" class="pillars">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Warum GEARLINE</h2>
+    </div>
+    <div class="pillar-grid">
+      <div class="pillar">
+        <p class="num mono">01</p>
+        <h3>Sofort einsatzbereit</h3>
+        <p>Kein Montage-Marathon: auspacken, anschließen, loslegen – jedes Set kommt komplett mit Anleitung.</p>
+      </div>
+      <div class="pillar">
+        <p class="num mono">02</p>
+        <h3>Für draußen gemacht</h3>
+        <p>Wetterfestes Aluminium, kraftstoffresistente Materialien und dichte Verschlüsse für Werkstatt, Straße und Stellplatz.</p>
+      </div>
+      <div class="pillar">
+        <p class="num mono">03</p>
+        <h3>Bei Amazon abgesichert</h3>
+        <p>Prime-Versand, 14–30 Tage Rückgaberecht und verifizierte Kundenbewertungen – Kauf und Versand laufen komplett über Amazon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt" class="contact">
+  <div class="wrap contact-grid">
+    <div class="contact-info">
+      <h2>Fragen zu einem Produkt?</h2>
+      <p>Ob Kompatibilität, Lieferzeiten oder Feedback zu einem Set – schreib uns kurz, worum es geht. Wir melden uns per E-Mail zurück.</p>
+      <div class="contact-direct">
+        <div>E-Mail: <a href="mailto:info@gearline.de">info@gearline.de</a></div>
+      </div>
+    </div>
+    <form id="contact-form">
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="email">E-Mail</label>
+        <input id="email" name="email" type="email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="message">Nachricht</label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
+      <div>
+        <button type="submit" class="btn btn-accent">Nachricht senden</button>
+        <p class="form-note">Öffnet dein E-Mail-Programm mit einer vorausgefüllten Nachricht an info@gearline.de.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section id="impressum" class="legal">
+  <div class="wrap legal-grid">
+    <div>
+      <h2>Impressum</h2>
+      <p>Angaben gemäß § 5 TMG</p>
+      <div class="mono-block">
+        SL Distribution UG (haftungsbeschränkt)<br>
+        Nerzweg 5<br>
+        50859 Köln<br>
+        <br>
+        <span class="muted">E-Mail:</span> info@gearline.de<br>
+        <br>
+        <span class="muted">Geschäftsführer:</span><br>
+        Niklas Liermann, Felix Schmalenbach<br>
+        <br>
+        <span class="muted">Umsatzsteuer-ID gem. § 27a UStG:</span><br>
+        DE451940609<br>
+        <br>
+        <span class="muted">Handelsregister:</span><br>
+        Amtsgericht Köln, HRB 121964
+      </div>
+    </div>
+    <div id="datenschutz">
+      <h2>Datenschutz</h2>
+      <p>Diese Website verwendet keine Cookies und keine Tracking- oder Analyse-Tools. Es werden serverseitig keine personenbezogenen Daten gespeichert.</p>
+      <p>Das Kontaktformular öffnet ausschließlich dein lokales E-Mail-Programm mit einer vorausgefüllten Nachricht an info@gearline.de – die Übermittlung erfolgt direkt per E-Mail und nicht über diese Website.</p>
+      <p>Externe Links zu Amazon-Produktseiten führen auf Angebote Dritter; für die dortige Datenverarbeitung gelten die Datenschutzbestimmungen von Amazon.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <a class="wordmark" href="#top">GEAR<em>LINE</em></a>
+    <small>© 2026 SL Distribution UG · Nerzweg 5, 50859 Köln</small>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('contact-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('name').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var message = document.getElementById('message').value.trim();
+    var subject = 'Anfrage über gearline.de – ' + name;
+    var body = message + '\n\n—\n' + name + '\n' + email;
+    var mailto = 'mailto:info@gearline.de'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body);
+    window.location.href = mailto;
+  });
+</script>
