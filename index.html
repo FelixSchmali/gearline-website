@@ -273,8 +273,24 @@
   .product-body .btn{ margin-top: 6px; align-self:flex-start; }
 
   /* ---------- pillars ---------- */
-  .pillars{ background: var(--surface-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-  .pillar-grid{ display:grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); }
+  .pillars{ background: var(--surface-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); overflow:hidden; }
+  .pillar-grid{ display:grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); }
+  .pillar{
+    padding: 24px; border-radius: 10px; border:1px solid transparent;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .pillar:hover{
+    transform: translateY(-4px);
+    background: var(--surface);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+    box-shadow: 0 16px 30px -20px var(--shadow);
+  }
+  .pillar-icon{
+    width:40px; height:40px; margin-bottom:14px;
+    stroke: var(--accent-strong); fill:none;
+    stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;
+  }
+  .pillar-icon .dot{ fill: var(--accent-strong); stroke:none; }
   .pillar .num{ font-family:'IBM Plex Mono'; color: var(--accent-strong); font-size:0.85rem; letter-spacing:0.1em; }
   .pillar h3{ font-size:1.15rem; font-weight:600; font-family:'IBM Plex Sans'; margin: 10px 0 8px; }
   .pillar p{ color: var(--ink-soft); font-size:0.95rem; margin:0; }
@@ -291,16 +307,29 @@
   }
   .proof-banner span{ color: var(--ink-soft); font-size:0.95rem; max-width:52ch; }
   .review-grid{
-    display:grid; gap:18px; margin-top:4px;
+    display:grid; gap:22px 18px; margin-top:10px; padding: 6px;
     grid-template-columns: repeat(auto-fit, minmax(230px,1fr));
   }
   .review-card{
     background: var(--surface); border:1px solid var(--line); border-radius:8px;
-    padding:18px 20px;
+    padding:18px 20px; transform: rotate(var(--tilt,0deg));
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .review-card:nth-child(3n+1){ --tilt: -1.4deg; }
+  .review-card:nth-child(3n+2){ --tilt: 0.8deg; }
+  .review-card:nth-child(3n+3){ --tilt: -0.6deg; }
+  .review-card:hover{
+    transform: rotate(0deg) translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+    box-shadow: 0 18px 32px -20px var(--shadow);
   }
   .review-card .stars{ color: var(--accent-strong); font-size:0.85rem; letter-spacing:0.1em; margin-bottom:8px; }
   .review-card p{ font-size:0.92rem; color: var(--ink); line-height:1.5; margin:0 0 10px; }
   .review-card .name{ font-family:'IBM Plex Mono'; font-size:0.78rem; color: var(--ink-soft); }
+  @media (prefers-reduced-motion: reduce){
+    .pillar, .review-card{ transition:none; }
+    .review-card{ --tilt: 0deg; }
+  }
   .proof-note{ font-size:0.78rem; color: var(--ink-soft); margin: 14px 0 0; }
 
   /* ---------- contact ---------- */
@@ -507,16 +536,19 @@
     </div>
     <div class="pillar-grid">
       <div class="pillar">
+        <svg class="pillar-icon" viewBox="0 0 40 40"><path d="M21 4 L9 22 h7 l-3 14 L29 18 h-7z"/></svg>
         <p class="num mono">01</p>
         <h3>Sofort einsatzbereit</h3>
         <p>Kein Montage-Marathon: auspacken, anschließen, loslegen – jedes Set kommt komplett mit Anleitung.</p>
       </div>
       <div class="pillar">
+        <svg class="pillar-icon" viewBox="0 0 40 40"><path d="M20 4 L32 9 v10 c0 9 -6 14 -12 17 -6 -3 -12 -8 -12 -17 V9 z"/><path class="dot" d="M20 15 q4 6 0 10 q-4 -4 0 -10z"/></svg>
         <p class="num mono">02</p>
         <h3>Für draußen gemacht</h3>
         <p>Wetterfestes Aluminium, kraftstoffresistente Materialien und dichte Verschlüsse für Werkstatt, Straße und Stellplatz.</p>
       </div>
       <div class="pillar">
+        <svg class="pillar-icon" viewBox="0 0 40 40"><circle cx="20" cy="17" r="11"/><path d="M14 17 l4 4 l8 -8"/><path d="M15 26 l-3 9 l8 -4 l8 4 l-3 -9"/></svg>
         <p class="num mono">03</p>
         <h3>Bei Amazon abgesichert</h3>
         <p>Prime-Versand, 14–30 Tage Rückgaberecht und verifizierte Kundenbewertungen – Kauf und Versand laufen komplett über Amazon.</p>
