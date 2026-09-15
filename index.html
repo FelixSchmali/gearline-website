@@ -357,9 +357,16 @@
     background: var(--surface); border:1px solid var(--line); border-radius:10px;
     padding:22px 24px; margin: 28px 0;
   }
-  .press-logo{ width:112px; flex-shrink:0; border-radius:4px; display:block; }
+  .press-photo{
+    width:120px; aspect-ratio:1/1; flex-shrink:0; overflow:hidden;
+    background: var(--surface-2); border:1px solid var(--line); border-radius:8px;
+    display:flex; align-items:center; justify-content:center; padding:10px;
+  }
+  .press-photo img{ width:100%; height:100%; object-fit:contain; }
+  .press-header{ display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap; }
+  .press-logo{ width:76px; flex-shrink:0; border-radius:3px; display:block; }
   .press-body{ flex:1; min-width:220px; }
-  .press-eyebrow{ font-size:0.72rem; color: var(--ink-soft); letter-spacing:0.05em; text-transform:uppercase; margin:0 0 8px; }
+  .press-eyebrow{ font-size:0.72rem; color: var(--ink-soft); letter-spacing:0.05em; text-transform:uppercase; margin:0; }
   .press-title{ font-family:'Chakra Petch'; font-size:1.15rem; font-weight:700; margin:0; color: var(--ink); }
   .press-subtitle{ font-size:0.85rem; color: var(--ink-soft); margin:2px 0 14px; }
   .press-check-box{ border:1px solid var(--line); border-radius:8px; padding:14px 16px; background: var(--surface-2); }
@@ -606,16 +613,20 @@
     </div>
 
     <div class="press-mention">
-      <img class="press-logo" src="img/motorrad-logo.svg" alt="MOTORRAD Logo">
+      <div class="press-photo"><img src="img/handpumpe-cutout.png" alt="GEARLINE Handpumpe"></div>
       <div class="press-body">
-        <p class="press-eyebrow mono">Bekannt aus MOTORRAD · Testbericht, Ausgabe 15/2026</p>
+        <div class="press-header">
+          <img class="press-logo" src="img/motorrad-logo.svg" alt="MOTORRAD Logo">
+          <p class="press-eyebrow mono">Bekannt aus MOTORRAD Magazin · Testbericht, Ausgabe 15/2026</p>
+        </div>
         <h4 class="press-title">GEARLINE Handpumpe</h4>
         <p class="press-subtitle">XL-Umfüllpumpe mit Handbetrieb</p>
         <div class="press-check-box">
           <span class="press-check-label">MOTORRAD-Check</span>
           <ul class="press-check-list">
-            <li class="pro">„Top-Verarbeitung, einfache Erstmontage und Bedienung.“</li>
-            <li class="con">Laut Test nicht für Trinkwasser oder Speiseöl zugelassen</li>
+            <li class="pro">Top-Verarbeitung</li>
+            <li class="pro">Einfache Erstmontage und Bedienung</li>
+            <li class="pro">Für Benzin, Öl, Diesel und (Brauch-)Wasser geeignet</li>
           </ul>
           <div class="press-check-footer">
             <span class="press-price">21,95&nbsp;€</span>
