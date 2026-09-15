@@ -254,14 +254,35 @@
     transform: translateY(-2px);
   }
   .product-media{
-    aspect-ratio: 1 / 1;
+    position:relative; aspect-ratio: 1 / 1;
     background: var(--surface-2);
     display:flex; align-items:center; justify-content:center;
     padding: 22px; overflow:hidden;
     border-bottom: 1px solid var(--line);
   }
-  .product-media img{ width:100%; height:100%; object-fit:contain; }
-  .product-media img.fill-tall{ transform: scale(1.08); }
+  .product-media img{
+    width:100%; height:100%; object-fit:contain;
+    --img-scale: 1; transform: scale(var(--img-scale));
+    transition: transform .3s ease;
+  }
+  .product-media img.fill-tall{ --img-scale: 1.08; }
+  .product-card:hover .product-media img{ transform: scale(calc(var(--img-scale) * 1.05)); }
+  .discount-badge{
+    position:absolute; top:12px; left:12px; z-index:2;
+    background: var(--accent); color: var(--accent-ink);
+    font-family:'IBM Plex Mono'; font-weight:600; font-size:0.78rem;
+    padding:5px 10px; border-radius:999px;
+    box-shadow: 0 8px 16px -8px rgba(0,0,0,0.45);
+  }
+  .discount-badge:empty{ display:none; }
+  .bestseller-badge{
+    position:absolute; top:12px; right:12px; z-index:2;
+    background: var(--plate); color: var(--ink);
+    font-family:'IBM Plex Mono'; font-weight:600; font-size:0.72rem;
+    letter-spacing:0.03em; text-transform:uppercase;
+    padding:5px 10px; border-radius:999px;
+    box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4);
+  }
   .product-body{ padding: 20px 22px 24px; display:flex; flex-direction:column; gap:10px; flex:1; }
   .product-meta{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; font-size:0.92rem; }
   .price{ font-weight:600; color: var(--ink); }
@@ -456,7 +477,7 @@
     <div class="grid">
 
       <article class="product-card" id="p-warntafel">
-        <div class="product-media"><img class="fill-tall" src="img/warntafel-cutout.png" alt="GEARLINE 3-in-1 Warntafel für Italien, Spanien und Portugal"></div>
+        <div class="product-media"><span class="discount-badge" id="badge-p-warntafel"></span><img class="fill-tall" src="img/warntafel-cutout.png" alt="GEARLINE 3-in-1 Warntafel für Italien, Spanien und Portugal"></div>
         <div class="product-body">
           <div class="product-meta mono">
             <span class="price">29,95&nbsp;€</span>
@@ -470,7 +491,7 @@
       </article>
 
       <article class="product-card" id="p-scheinwerfer">
-        <div class="product-media"><img src="img/scheinwerfer-cutout.png" alt="GEARLINE Scheinwerfer Aufbereitung Set mit 24 Teilen"></div>
+        <div class="product-media"><span class="discount-badge" id="badge-p-scheinwerfer"></span><span class="bestseller-badge">Bestseller</span><img src="img/scheinwerfer-cutout.png" alt="GEARLINE Scheinwerfer Aufbereitung Set mit 24 Teilen"></div>
         <div class="product-body">
           <div class="product-meta mono">
             <span class="price">16,95&nbsp;€</span>
@@ -484,7 +505,7 @@
       </article>
 
       <article class="product-card" id="p-handpumpe">
-        <div class="product-media"><img src="img/handpumpe-cutout.png" alt="GEARLINE Handpumpe mit 2 Meter Schlauch"></div>
+        <div class="product-media"><span class="discount-badge" id="badge-p-handpumpe"></span><img src="img/handpumpe-cutout.png" alt="GEARLINE Handpumpe mit 2 Meter Schlauch"></div>
         <div class="product-body">
           <div class="product-meta mono">
             <span class="price">18,66&nbsp;€</span>
@@ -498,7 +519,7 @@
       </article>
 
       <article class="product-card" id="p-druckluft">
-        <div class="product-media"><img src="img/druckluftpistole-cutout.png" alt="GEARLINE Druckluft Reinigungspistole mit Wirbelstrahl-Technik"></div>
+        <div class="product-media"><span class="discount-badge" id="badge-p-druckluft"></span><img src="img/druckluftpistole-cutout.png" alt="GEARLINE Druckluft Reinigungspistole mit Wirbelstrahl-Technik"></div>
         <div class="product-body">
           <div class="product-meta mono">
             <span class="price">27,95&nbsp;€</span>
@@ -512,7 +533,7 @@
       </article>
 
       <article class="product-card" id="p-oelspritze">
-        <div class="product-media"><img class="fill-tall" src="img/oelspritze-cutout.png" alt="GEARLINE Ölabsaugspritze 500 Milliliter"></div>
+        <div class="product-media"><span class="discount-badge" id="badge-p-oelspritze"></span><img class="fill-tall" src="img/oelspritze-cutout.png" alt="GEARLINE Ölabsaugspritze 500 Milliliter"></div>
         <div class="product-body">
           <div class="product-meta mono">
             <span class="price">14,95&nbsp;€</span>
@@ -715,6 +736,15 @@
         ratingEl.textContent = '';
         ratingEl.appendChild(star);
         ratingEl.appendChild(document.createTextNode(' ' + p.rating.toFixed(1).replace('.', ',') + ' · ' + p.reviews));
+      }
+      var badgeEl = document.getElementById('badge-' + id);
+      if (badgeEl) {
+        if (p.priceOld && p.priceOld > p.price) {
+          var pct = Math.round((1 - p.price / p.priceOld) * 100);
+          badgeEl.textContent = '-' + pct + '%';
+        } else {
+          badgeEl.textContent = '';
+        }
       }
       totalReviews += p.reviews;
       weightedRating += p.rating * p.reviews;
