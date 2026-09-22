@@ -292,11 +292,6 @@
   .price-old{ color: var(--ink-soft); text-decoration: line-through; }
   .rating{ color: var(--ink-soft); margin-left:auto; }
   .rating .star{ color: var(--accent-strong); }
-  .stock-status{ display:flex; align-items:center; gap:6px; font-size:0.82rem; font-family:'IBM Plex Mono'; }
-  .stock-status .dot{ width:7px; height:7px; border-radius:50%; background: currentColor; flex-shrink:0; }
-  .stock-status.in-stock{ color:#1a7a3c; }
-  .stock-status.low-stock{ color:#b5750f; }
-  .stock-status.out-stock{ color:#a3312c; }
   .product-body h3{ font-size: 1.08rem; font-weight:600; font-family:'IBM Plex Sans'; line-height:1.35; }
   .product-body p{ color: var(--ink-soft); font-size: 0.93rem; margin:0; flex:1; }
   .product-body .btn{ margin-top: 6px; align-self:flex-start; }
@@ -520,7 +515,6 @@
             <span class="price-old">32,95&nbsp;€</span>
             <span class="rating"><span class="star">★</span> 4,5 · 141</span>
           </div>
-          <div class="stock-status" id="stock-p-warntafel" hidden></div>
           <h3>3-in-1 Warntafel für Italien, Spanien &amp; Portugal</h3>
           <p>Beidseitige, reflektierende Warntafel aus wetterfestem Aluminium – inkl. 4 Spanngummis und Schutzhülle für Heckträger und Fahrradanhänger.</p>
           <a class="btn btn-accent" href="https://www.amazon.de/dp/B0FJMCDJ8D" target="_blank" rel="noopener noreferrer">Bei Amazon ansehen <span aria-hidden="true">↗</span></a>
@@ -535,7 +529,6 @@
             <span class="price-old">19,95&nbsp;€</span>
             <span class="rating"><span class="star">★</span> 4,5 · 353</span>
           </div>
-          <div class="stock-status" id="stock-p-scheinwerfer" hidden></div>
           <h3>Scheinwerfer Aufbereitung Set [24 Teile]</h3>
           <p>14 Schleifscheiben in 7 Körnungen, Polierpaste und UV-Schutz gegen matte, blinde Scheinwerfer – per M14-Adapter kompatibel mit jedem Akkuschrauber.</p>
           <a class="btn btn-accent" href="https://www.amazon.de/dp/B0FJM1ZXZ2" target="_blank" rel="noopener noreferrer">Bei Amazon ansehen <span aria-hidden="true">↗</span></a>
@@ -550,7 +543,6 @@
             <span class="price-old">22,95&nbsp;€</span>
             <span class="rating"><span class="star">★</span> 4,3 · 160</span>
           </div>
-          <div class="stock-status" id="stock-p-handpumpe" hidden></div>
           <h3>Handpumpe [2&nbsp;Meter] XL Umfüllpumpe</h3>
           <p>2 m langer, teilbarer Schlauch mit Filtersieb zum Umfüllen und Abpumpen von Wasser, Benzin, Diesel und Öl – startet per Handdruck, ganz ohne Ansaugen.</p>
           <a class="btn btn-accent" href="https://www.amazon.de/dp/B0FJLZXSG4" target="_blank" rel="noopener noreferrer">Bei Amazon ansehen <span aria-hidden="true">↗</span></a>
@@ -565,7 +557,6 @@
             <span class="price-old">34,95&nbsp;€</span>
             <span class="rating"><span class="star">★</span> 4,3 · 104</span>
           </div>
-          <div class="stock-status" id="stock-p-druckluft" hidden></div>
           <h3>Druckluft Reinigungspistole</h3>
           <p>All-in-One-Set mit 1-Liter-Wassertank und 2 Düsenaufsätzen – löst per Wirbelstrahl-Technik Schmutz aus Polster, Lack, Teppich und Lüftung.</p>
           <a class="btn btn-accent" href="https://www.amazon.de/dp/B0FJM9S27M" target="_blank" rel="noopener noreferrer">Bei Amazon ansehen <span aria-hidden="true">↗</span></a>
@@ -580,7 +571,6 @@
             <span class="price-old" style="display:none;"></span>
             <span class="rating"><span class="star">★</span> 5,0 · 4</span>
           </div>
-          <div class="stock-status" id="stock-p-oelspritze" hidden></div>
           <h3>Ölabsaugspritze 500&nbsp;ml</h3>
           <p>Inkl. Verlängerungsschlauch und Dichtungsring – auslaufsicher für Motoröl, Getriebeöl, Kühl- und Bremsflüssigkeit.</p>
           <a class="btn btn-accent" href="https://www.amazon.de/dp/B0GXWYYB2L" target="_blank" rel="noopener noreferrer">Bei Amazon ansehen <span aria-hidden="true">↗</span></a>
@@ -802,26 +792,6 @@
         ratingEl.textContent = '';
         ratingEl.appendChild(star);
         ratingEl.appendChild(document.createTextNode(' ' + p.rating.toFixed(1).replace('.', ',') + ' · ' + p.reviews));
-      }
-      var stockEl = document.getElementById('stock-' + id);
-      if (stockEl) {
-        if (typeof p.stock === 'number') {
-          stockEl.hidden = false;
-          stockEl.className = 'stock-status';
-          var dot = '<span class="dot" aria-hidden="true"></span>';
-          if (p.stock <= 0) {
-            stockEl.classList.add('out-stock');
-            stockEl.innerHTML = dot + 'Aktuell nicht auf Lager';
-          } else if (p.stock <= 5) {
-            stockEl.classList.add('low-stock');
-            stockEl.innerHTML = dot + 'Nur noch ' + p.stock + ' auf Lager';
-          } else {
-            stockEl.classList.add('in-stock');
-            stockEl.innerHTML = dot + 'Auf Lager';
-          }
-        } else {
-          stockEl.hidden = true;
-        }
       }
       var badgeEl = document.getElementById('badge-' + id);
       if (badgeEl) {
